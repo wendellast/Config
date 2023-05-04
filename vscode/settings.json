@@ -1,0 +1,76 @@
+{
+
+    /*
+    
+    
+    *WENDELLAST - CONFIG 
+    
+    
+    
+    */
+
+    "workbench.colorTheme": "Atom One Dark",
+    "workbench.iconTheme": "bearded-icons",
+    "workbench.productIconTheme": "fluent-icons",
+    "editor.accessibilityPageSize": 18,
+    "editor.fontFamily": "\"fira code\"",
+    "editor.formatOnSave": true,
+
+
+    "code-runner.executorMap": {
+        "python": "python -u",
+        "javascript": "node"
+    },
+    "code-runner.runInTerminal": true,
+    "code-runner.clearPreviousOutput": true,
+
+    // Python
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python",
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    "python.languageServer": "Pylance",
+    "python.formatting.provider": "autopep8",
+    "python.formatting.autopep8Args": [
+        "--indent-size=4"
+    ],
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": [
+        "--load-plugins=pylint_django",
+        "--errors-only"
+    ],
+    "python.linting.flake8Enabled": true,
+    "python.testing.unittestEnabled": false,
+    "python.linting.mypyEnabled": true,
+    "python.defaultInterpreterPath": "${env:HOME}/.local/share/virtualenvs/myenv/bin/python",
+
+    // JavaScript
+    "[javascript]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        },
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+    "javascript.format.placeOpenBraceOnNewLineForControlBlocks": false,
+    "javascript.format.placeOpenBraceOnNewLineForFunctions": false,
+    "terminal.integrated.fontFamily": "Fira Code Bold",
+    "tabnine.experimentalAutoImports": true,
+    "editor.cursorStyle": "block",
+    "powermode.enabled": true,
+    "powermode.combo.location": "off",
+    "powermode.shake.enabled": false,
+    "editor.wordWrap": "on",
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+}
