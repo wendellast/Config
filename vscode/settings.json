@@ -1,64 +1,61 @@
 {
-
     /*
-    
-    
-    *WENDELLAST - CONFIG 
-    
-    
-    
-    */
-
-    "workbench.colorTheme": "Atom One Dark",
-    "workbench.iconTheme": "bearded-icons",
+      
+      
+      *WENDELLAST - CONFIG 
+      
+      
+      
+      */
+  
+    /* CODING - CONFIG
+     *   Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser // WIndows virtual
+     *
+     */
+    "workbench.colorTheme": "Monokai Pro",
+    "workbench.iconTheme": "Monokai Pro Icons",
     "workbench.productIconTheme": "fluent-icons",
     "editor.accessibilityPageSize": 18,
     "editor.fontFamily": "\"fira code\"",
     "editor.formatOnSave": true,
-
-
     "code-runner.executorMap": {
-        "python": "python -u",
-        "javascript": "node"
+      "python": "python -u",
+      "javascript": "node"
     },
     "code-runner.runInTerminal": true,
     "code-runner.clearPreviousOutput": true,
-
     // Python
     "[python]": {
-        "editor.defaultFormatter": "ms-python.python",
-        "editor.tabSize": 4,
-        "editor.insertSpaces": true,
-        "editor.formatOnSave": true,
-        "editor.formatOnType": true,
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": true
-        }
+      "editor.defaultFormatter": "ms-python.python",
+      "editor.tabSize": 4,
+      "editor.insertSpaces": true,
+      "editor.formatOnSave": true,
+      "editor.formatOnType": true,
+      "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+      }
     },
     "python.languageServer": "Pylance",
     "python.formatting.provider": "autopep8",
-    "python.formatting.autopep8Args": [
-        "--indent-size=4"
-    ],
+    "python.formatting.autopep8Args": ["--indent-size=4"],
     "python.linting.pylintEnabled": true,
     "python.linting.pylintArgs": [
-        "--load-plugins=pylint_django",
-        "--errors-only"
+      "--load-plugins=pylint_django",
+      "--errors-only"
     ],
     "python.linting.flake8Enabled": true,
     "python.testing.unittestEnabled": false,
     "python.linting.mypyEnabled": true,
     "python.defaultInterpreterPath": "${env:HOME}/.local/share/virtualenvs/myenv/bin/python",
-
     // JavaScript
     "[javascript]": {
-        "editor.tabSize": 2,
-        "editor.insertSpaces": true,
-        "editor.formatOnSave": true,
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": true
-        },
-        "editor.defaultFormatter": "vscode.typescript-language-features"
+      "editor.tabSize": 2,
+      "editor.insertSpaces": true,
+      "editor.formatOnSave": true,
+      "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+      },
+      "editor.defaultFormatter": "vscode.typescript-language-features"
     },
     "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
     "javascript.format.placeOpenBraceOnNewLineForControlBlocks": false,
@@ -70,7 +67,47 @@
     "powermode.combo.location": "off",
     "powermode.shake.enabled": false,
     "editor.wordWrap": "on",
+    
+    //HTML
     "[html]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "git.autofetch": true,
+    "liveServer.settings.donotShowInfoMsg": true,
+    "[markdown]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.fontSize": 16,
+    "workbench.preferredDarkColorTheme": "Kimbie Dark",
+  
+    //DJANGO
+    "[django-html]": {
+      "editor.formatOnSave": false,
+      "editor.defaultFormatter": "vscode.html-language-features",
+      "editor.quickSuggestions": {
+        "other": true,
+        "comments": true,
+        "strings": true
+      }
+    },
+  
+    //FILES
+    "files.associations": {
+      "*.js": "javascript",
+      "*.jsx": "javascriptreact",
+      "*.xml": "html",
+      "*.svg": "html",
+      "*.html": "html",
+      "django-html": "html", // batisteo.vscode-django
+      "**/*.html": "html",
+      "**/templates/**/*.html": "django-html",
+      "**/base_templates/**/*.html": "django-html",
+      "**/requirements{/**,*}.{txt,in}": "pip-requirements"
+    },
+    "emmet.includeLanguages": {
+      "django-html": "html", // batisteo.vscode-django
+      "javascript": "javascriptreact",
+      "typescript": "typescriptreact"
     }
-}
+  }
+  
