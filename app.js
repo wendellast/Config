@@ -14,7 +14,9 @@ function hello (first, second) {
   }
   return 'done';
 }
-
+const app = () => {
+  return console.log('Heelo')
+}
 // Exemplo de uso
 try {
   hello(false, true);
