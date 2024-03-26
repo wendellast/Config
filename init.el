@@ -24,6 +24,20 @@
       mouse-wheel-follow-mouse 't                   ; Rola a janela sob o mouse
       scroll-step 1)                                ; Rola 1 linha com teclado
 
+
+  
+(use-package go-mode
+  :ensure t
+  :hook (go-mode . lsp-deferred))
+  
+(use-package lsp-mode
+  :ensure t
+  :commands lsp)
+  
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode)
+
 ;; Quebras de linha
 (global-visual-line-mode t)
 
@@ -45,6 +59,19 @@
     (funcall initial-major-mode)
     (setq buffer-offer-save t)
     debmx/buf))
+
+
+;; Ativar o modo de destaque de sintaxe
+(global-font-lock-mode t)
+
+;; Definir regras de realce personalizadas
+(add-hook 'emacs-lisp-mode-hook
+          (lambda ()
+            (font-lock-add-keywords nil
+                                    '(("\\(\\|\\)" . font-lock-builtin-face)
+                                      ("\\[\\|\\]" . font-lock-builtin-face)
+                                      ("{" . font-lock-builtin-face)
+                                      ("}" . font-lock-builtin-face)))))
 
 ;; Modo inicial
 (setq initial-major-mode 'prog-mode)
@@ -93,6 +120,8 @@
 (use-package all-the-icons
   :ensure t
   :if (display-graphic-p))
+  
+  
 
 (use-package neotree
   :ensure t
@@ -139,7 +168,17 @@
   (setq default-directory meu-ultimo-diretorio))
 
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(ispell-dictionary "brasileiro")
  '(package-selected-packages
    '(ace-window all-the-icons auto-complete auto-package-update ergoemacs-mode ergoesmacs-mode flycheck neotree rebecca-theme try use-package)))
-(custom-set-faces)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+	
