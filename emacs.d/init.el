@@ -160,6 +160,9 @@
   (add-hook 'go-mode-hook 'go-eldoc-setup))
 
 
+
+
+
 (use-package robe
   :ensure t
   :hook (ruby-mode . robe-mode)
@@ -189,6 +192,19 @@
   (auto-package-update-at-time "21:00"))
   
   
+  ;; Definindo uma nova função para suspender o processo
+(defun my-suspend-emacs ()
+  "Suspende o Emacs."
+  (interactive)
+  (suspend-emacs))
+
+;; Mapeando a função de desfazer para Ctrl + z
+(global-set-key (kbd "C-z") 'undo)
+
+;; Mapeando a função de suspender o Emacs para Ctrl + x Ctrl + z
+(global-set-key (kbd "C-x C-z") 'my-suspend-emacs)
+
+
   
  ;; ASPAS
  
