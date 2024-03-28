@@ -137,6 +137,10 @@
   :bind ("<f8>" . 'neotree-toggle) ;; Atalho para ativar/desativar o NeoTree
 )
 
+(load-file "~/.emacs.d/discord-emacs.el")
+(discord-emacs-run "384815451978334208")
+
+
 
 (use-package company-jedi
   :ensure t
@@ -204,6 +208,8 @@
 ;; Mapeando a função de suspender o Emacs para Ctrl + x Ctrl + z
 (global-set-key (kbd "C-x C-z") 'my-suspend-emacs)
 
+(setq-default neo-show-hidden-files t)
+
 
   
  ;; ASPAS
@@ -226,6 +232,117 @@
                                            ("\"" . "\""))))))))
 
 (global-set-key (kbd "M-9") #'insert-pair)
+(global-set-key (kbd "C-x C-m") 'find-file)
+
+(unless (package-installed-p 'tabbar)
+  (package-refresh-contents)
+  (package-install 'tabbar))
+
+(tabbar-mode 1)  ;; Ativar o modo de abas
+
+;; Configuração opcional para modificar o visual das abas
+(setq tabbar-separator '(1.5))  ;; Espaçamento entre abas
+(setq tabbar-background-color "#282c34")  ;; Cor de fundo das abas
+(set-face-attribute 'tabbar-default nil
+                    :background "#282c34"
+                    :foreground "#bbc2cf"
+                    :box '(:line-width 1 :color "#282c34" :style nil))
+(set-face-attribute 'tabbar-selected nil
+                    :background "#3e4451"
+                    :foreground "#e06c75"
+                    :box '(:line-width 1 :color "#282c34" :style nil))
+(set-face-attribute 'tabbar-modified nil
+                    :background "#3e4451"
+                    :foreground "#e5c07b"
+                    :box '(:line-width 1 :color "#282c34" :style nil))
+
+;; Configuração de atalhos para navegação entre abas
+(global-set-key (kbd "M-<left>") 'tabbar-backward-tab)
+(global-set-key (kbd "M-<right>") 'tabbar-forward-tab)
+
+
+;; Jdnago
+
+
+;; Instale o pacote use-package se ainda não estiver instalado
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+;; Carregue e configure os pacotes
+(eval-when-compile
+  (require 'use-package))
+
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable))
+
+(use-package django-mode
+  :ensure t)
+
+(use-package company
+  :ensure t
+  :config
+  (add-hook 'after-init-hook 'global-company-mode))
+
+(use-package company-jedi
+  :ensure t
+  :config
+  (add-to-list 'company-backends 'company-jedi))
+
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-mode))
+
+;; Instale o pacote `centaur-tabs` se ainda não o tiver feito
+(use-package centaur-tabs
+  :demand
+  :config
+  (centaur-tabs-mode t)
+  :bind
+  ("C-<prior>" . centaur-tabs-backward)
+  ("C-<next>" . centaur-tabs-forward)
+  :custom
+  (centaur-tabs-style "bar")
+  (centaur-tabs-set-bar 'under)
+  (centaur-tabs-set-modified-marker t)
+  (centaur-tabs-modified-marker "●")
+  (centaur-tabs-close-button " × ")
+  (centaur-tabs-set-icons t)
+  (centaur-tabs-gray-out-icons 'buffer)
+  (centaur-tabs-set-bar 'over)
+  (centaur-tabs-height 28)
+  :hook
+  (dired-mode . centaur-tabs-local-mode)
+  (dashboard-mode . centaur-tabs-local-mode)
+  (term-mode . centaur-tabs-local-mode)
+  :config
+  (centaur-tabs-group-by-projectile-project)
+  (setq centaur-tabs-set-icons t)
+  (setq centaur-tabs-set-bar 'under)
+  (setq centaur-tabs-height 32)
+  (setq centaur-tabs-style "wave")
+  (setq centaur-tabs-set-modified-marker t)
+  (setq centaur-tabs-modified-marker "●")
+  (setq centaur-tabs-cycle-scope 'tabs)
+  (setq centaur-tabs-close-button " × ")
+  (setq centaur-tabs-set-close-button t)
+  (setq centaur-tabs-show-navigation-buttons t)
+  (setq centaur-tabs-set-close-button nil)
+  (setq centaur-tabs-set-modified-marker t)
+  (setq centaur-tabs-modified-marker "●")
+  (setq centaur-tabs-gray-out-icons 'buffer)
+  (setq centaur-tabs-buffer-groups-function #'centaur-tabs-projectile-buffer-groups))
+
+;; Mude para a próxima e a aba anterior usando Ctrl + PageUp/PageDown
+(global-set-key (kbd "C-<prior>") 'centaur-tabs-backward)
+(global-set-key (kbd "C-<next>") 'centaur-tabs-forward)
 
 
 ;; Salva o diretório atual ao fechar o Emacs
