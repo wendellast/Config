@@ -1,4 +1,4 @@
-  ;;; package --- Summary: Configuração Emacs: Wendellast
+;;; package --- Summary: Configuração Emacs: Wendellast
 
 ;;; GLOBAL =-=-=-=-=-==-=-=-=-=-==-=-=-=-=-==-=-=-=-=-==-=-=-=-=-==-=-=-=-=-==-=-=-=-=-==-=-=-=-=-==-=-=-=-=-=
 
@@ -18,40 +18,12 @@
 (column-number-mode t)
 (global-hl-line-mode t)
 
-(use-package rainbow-delimiters
-  :ensure t
-  :hook (prog-mode . rainbow-delimiters-mode))
-
-
 ;; Alertas visuais
 (setq visible-bell t)
-
-
-
-
-
-
-;; TAB
-;; Configuração de espaçamento de tabulação
-(setq-default indent-tabs-mode nil) ;; Usa espaços em vez de tabulações
-(setq-default tab-width 4) ;; Define o tamanho da tabulação como 4 espaços
-(setq-default c-basic-offset 4) ;; Define o tamanho da tabulação para arquivos de código C-like (opcional)
-(setq-default js-indent-level 4) ;; Define o tamanho da tabulação para arquivos JavaScript (opcional)
-	
 
 ;; Espaçamento das bordas laterais
 (set-fringe-mode 10)
 
-;; Desabilita Ctrl-Z (suspensão do frame) e modo de seleção
-(global-unset-key (kbd "C-z"))
-(global-unset-key (kbd "<Scroll_Lock>"))
-(delete-selection-mode t)
-
-;; Rolagem suave
-(setq mouse-wheel-scroll-amount '(2 ((shift) . 1))
-      mouse-wheel-progressive-speed nil
-      mouse-wheel-follow-mouse 't
-      scroll-step 1)
 
 ;; Quebras de linha visual
 (global-visual-line-mode t)
@@ -59,15 +31,7 @@
 ;; Tipo de cursor (box, bar ou hbar)
 (setq-default cursor-type 'box)
 
-;; Função para criar um novo buffer
-(defun debmx-new-buffer ()
-  "Cria um novo buffer sem nome."
-  (interactive)
-  (let ((debmx/buf (generate-new-buffer "sem-nome")))
-    (switch-to-buffer debmx/buf)
-    (funcall initial-major-mode)
-    (setq buffer-offer-save t)
-    debmx/buf))
+
 
 ;; Ativar o modo de destaque de sintaxe
 (global-font-lock-mode t)
@@ -76,15 +40,7 @@
 (setq initial-major-mode 'prog-mode)
 (setq initial-buffer-choice 'debmx-new-buffer)
 
-;; Organizando os backups
-(setq backup-directory-alist `(("." . "~/.saves")))
 
-;; Atalhos
-(global-set-key (kbd "C-x <tab>") 'other-window)
-(global-set-key (kbd "M-<down>") 'enlarge-window)
-(global-set-key (kbd "M-<up>") 'shrink-window)
-(global-set-key (kbd "M-<left>") 'enlarge-window-horizontally)
-(global-set-key (kbd "M-<right>") 'shrink-window-horizontally)
 
 ;;; PACKAGE =-=-=-=-=-==-=-=-=-=-==-=-=-=-=-==-=-=-=-=-==-=-=-=-=-==-=-=-=-=-==-=-=-=-=-==-=-=-=-=-==-=-=-=-=-=
 
@@ -108,7 +64,13 @@
 (eval-when-compile
   (require 'use-package))
 
-;; Instalação dos pacotes adicionais
+;; Instalação dos pacotes adicionais =-=-=-=-=-=-=-=-=-=-
+
+
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (prog-mode . rainbow-delimiters-mode))
+
 
 (use-package try :ensure t)
 
@@ -116,12 +78,16 @@
   :init (progn
           (ac-config-default)
           (global-auto-complete-mode t)))
+
 (use-package all-the-icons :ensure t
   :if (display-graphic-p))
+
 (use-package neotree :ensure t
   :config (setq neo-theme (if (display-graphic-p) 'arrow))
   :bind (("C-x q" . 'neotree-toggle))) ; Corrige o atalho para "C-x q"
+
 (use-package ace-window :ensure t :bind (("C-x o" . ace-window)))
+
 (use-package flycheck :ensure t :init (global-flycheck-mode t))
 
 
@@ -136,10 +102,6 @@
   (setq neo-autorefresh nil) ;; Desativa a atualização automática do NeoTree
   :bind ("<f8>" . 'neotree-toggle) ;; Atalho para ativar/desativar o NeoTree
 )
-
-(load-file "~/.emacs.d/discord-emacs.el")
-(discord-emacs-run "384815451978334208")
-
 
 
 (use-package company-jedi
@@ -195,20 +157,9 @@
   (auto-package-update-maybe)
   (auto-package-update-at-time "21:00"))
   
-  
-  ;; Definindo uma nova função para suspender o processo
-(defun my-suspend-emacs ()
-  "Suspende o Emacs."
-  (interactive)
-  (suspend-emacs))
 
-;; Mapeando a função de desfazer para Ctrl + z
-(global-set-key (kbd "C-z") 'undo)
 
-;; Mapeando a função de suspender o Emacs para Ctrl + x Ctrl + z
-(global-set-key (kbd "C-x C-z") 'my-suspend-emacs)
 
-(setq-default neo-show-hidden-files t)
 
 
   
@@ -218,18 +169,6 @@
   :ensure t
   :config
   (smartparens-global-mode t))
-
-(defun insert-pair ()
-  "Insert a pair of characters and place point between them."
-  (interactive)
-  (let ((pair (read-string "Enter pair to insert: ")))
-    (insert pair)
-    (save-excursion
-      (insert (cdr (assoc (string pair) '(("(" . ")")
-                                           ("[" . "]")
-                                           ("{" . "}")
-                                           ("<" . ">")
-                                           ("\"" . "\""))))))))
 
 (global-set-key (kbd "M-9") #'insert-pair)
 (global-set-key (kbd "C-x C-m") 'find-file)
@@ -256,22 +195,6 @@
                     :foreground "#e5c07b"
                     :box '(:line-width 1 :color "#282c34" :style nil))
 
-;; Configuração de atalhos para navegação entre abas
-(global-set-key (kbd "M-<left>") 'tabbar-backward-tab)
-(global-set-key (kbd "M-<right>") 'tabbar-forward-tab)
-
-
-;; Jdnago
-
-
-;; Instale o pacote use-package se ainda não estiver instalado
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-;; Carregue e configure os pacotes
-(eval-when-compile
-  (require 'use-package))
 
 (use-package elpy
   :ensure t
@@ -340,11 +263,82 @@
   (setq centaur-tabs-gray-out-icons 'buffer)
   (setq centaur-tabs-buffer-groups-function #'centaur-tabs-projectile-buffer-groups))
 
+
+;; Atalhos -=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-
 ;; Mude para a próxima e a aba anterior usando Ctrl + PageUp/PageDown
+
+;; Configuração de atalhos para navegação entre abas
+(global-set-key (kbd "M-<left>") 'tabbar-backward-tab)
+(global-set-key (kbd "M-<right>") 'tabbar-forward-tab)
 (global-set-key (kbd "C-<prior>") 'centaur-tabs-backward)
 (global-set-key (kbd "C-<next>") 'centaur-tabs-forward)
+(global-set-key (kbd "C-x <tab>") 'other-window)
+
+(global-set-key (kbd "M-<down>") 'enlarge-window)
+(global-set-key (kbd "M-<up>") 'shrink-window)
+(global-set-key (kbd "M-<left>") 'enlarge-window-horizontally)
+(global-set-key (kbd "M-<right>") 'shrink-window-horizontally)
+(global-set-key (kbd "C-z") 'undo)
+(global-set-key (kbd "C-x C-z") 'my-suspend-emacs)
+
+(setq-default indent-tabs-mode nil) ;; Usa espaços em vez de tabulações
+(setq-default tab-width 4) ;; Define o tamanho da tabulação como 4 espaços
+(setq-default c-basic-offset 4) ;; Define o tamanho da tabulação para arquivos de código C-like (opcional)
+(setq-default js-indent-level 4) ;; Define o tamanho da tabulação para arquivos JavaScript (opcional)
+
+(global-unset-key (kbd "C-z"))
+(global-unset-key (kbd "<Scroll_Lock>"))
+(delete-selection-mode t)
 
 
+;; My Extensetions -=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-
+(load-file "~/.emacs.d/discord-emacs.el")
+(discord-emacs-run "384815451978334208")
+
+
+;; CONFIG EXTRA -=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-
+
+(setq-default neo-show-hidden-files t)
+  
+;; Definindo uma nova função para suspender o processo
+(defun my-suspend-emacs ()
+  "Suspende o Emacs."
+  (interactive)
+  (suspend-emacs))
+
+;; Organizando os backups
+(setq backup-directory-alist `(("." . "~/.saves")))
+
+;; Função para criar um novo buffer
+(defun debmx-new-buffer ()
+  "Cria um novo buffer sem nome."
+  (interactive)
+  (let ((debmx/buf (generate-new-buffer "sem-nome")))
+    (switch-to-buffer debmx/buf)
+    (funcall initial-major-mode)
+    (setq buffer-offer-save t)
+    debmx/buf))
+
+;; Rolagem suave
+(setq mouse-wheel-scroll-amount '(2 ((shift) . 1))
+      mouse-wheel-progressive-speed nil
+      mouse-wheel-follow-mouse 't
+      scroll-step 1)
+
+(defun insert-pair ()
+  "Insert a pair of characters and place point between them."
+  (interactive)
+  (let ((pair (read-string "Enter pair to insert: ")))
+    (insert pair)
+    (save-excursion
+      (insert (cdr (assoc (string pair) '(("(" . ")")
+                                           ("[" . "]")
+                                           ("{" . "}")
+                                           ("<" . ">")
+                                           ("\"" . "\""))))))))
+
+
+;; Restaura o último diretório ao iniciar o Emacs
 ;; Salva o diretório atual ao fechar o Emacs
 (add-hook 'kill-emacs-hook
           (lambda ()
@@ -352,13 +346,16 @@
             (with-temp-file "~/.emacs_last_directory"
               (insert meu-ultimo-diretorio))))
 
-;; Restaura o último diretório ao iniciar o Emacs
+
+
 (when (file-readable-p "~/.emacs_last_directory")
   (setq meu-ultimo-diretorio (with-temp-buffer
                                (insert-file-contents "~/.emacs_last_directory")
                                (buffer-string)))
   (delete-file "~/.emacs_last_directory")
   (setq default-directory meu-ultimo-diretorio))
+
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -368,6 +365,7 @@
  '(ispell-dictionary "brasileiro")
  '(package-selected-packages
    '(ace-window all-the-icons auto-complete auto-package-update ergoemacs-mode ergoesmacs-mode flycheck neotree try use-package)))
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
