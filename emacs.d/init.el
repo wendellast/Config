@@ -13,6 +13,9 @@
 (scroll-bar-mode -1)
 (tooltip-mode    -1)
 
+(set-face-attribute 'default nil :height 80)
+
+
 ;; Ativa a exibição de números de linha, destaque de linha e coluna atual
 (global-display-line-numbers-mode t)
 (column-number-mode t)
@@ -170,30 +173,7 @@
   :config
   (smartparens-global-mode t))
 
-(global-set-key (kbd "M-9") #'insert-pair)
-(global-set-key (kbd "C-x C-m") 'find-file)
 
-(unless (package-installed-p 'tabbar)
-  (package-refresh-contents)
-  (package-install 'tabbar))
-
-(tabbar-mode 1)  ;; Ativar o modo de abas
-
-;; Configuração opcional para modificar o visual das abas
-(setq tabbar-separator '(1.5))  ;; Espaçamento entre abas
-(setq tabbar-background-color "#282c34")  ;; Cor de fundo das abas
-(set-face-attribute 'tabbar-default nil
-                    :background "#282c34"
-                    :foreground "#bbc2cf"
-                    :box '(:line-width 1 :color "#282c34" :style nil))
-(set-face-attribute 'tabbar-selected nil
-                    :background "#3e4451"
-                    :foreground "#e06c75"
-                    :box '(:line-width 1 :color "#282c34" :style nil))
-(set-face-attribute 'tabbar-modified nil
-                    :background "#3e4451"
-                    :foreground "#e5c07b"
-                    :box '(:line-width 1 :color "#282c34" :style nil))
 
 
 (use-package elpy
@@ -222,46 +202,6 @@
   :ensure t
   :config
   (projectile-mode))
-
-;; Instale o pacote `centaur-tabs` se ainda não o tiver feito
-(use-package centaur-tabs
-  :demand
-  :config
-  (centaur-tabs-mode t)
-  :bind
-  ("C-<prior>" . centaur-tabs-backward)
-  ("C-<next>" . centaur-tabs-forward)
-  :custom
-  (centaur-tabs-style "bar")
-  (centaur-tabs-set-bar 'under)
-  (centaur-tabs-set-modified-marker t)
-  (centaur-tabs-modified-marker "●")
-  (centaur-tabs-close-button " × ")
-  (centaur-tabs-set-icons t)
-  (centaur-tabs-gray-out-icons 'buffer)
-  (centaur-tabs-set-bar 'over)
-  (centaur-tabs-height 28)
-  :hook
-  (dired-mode . centaur-tabs-local-mode)
-  (dashboard-mode . centaur-tabs-local-mode)
-  (term-mode . centaur-tabs-local-mode)
-  :config
-  (centaur-tabs-group-by-projectile-project)
-  (setq centaur-tabs-set-icons t)
-  (setq centaur-tabs-set-bar 'under)
-  (setq centaur-tabs-height 32)
-  (setq centaur-tabs-style "wave")
-  (setq centaur-tabs-set-modified-marker t)
-  (setq centaur-tabs-modified-marker "●")
-  (setq centaur-tabs-cycle-scope 'tabs)
-  (setq centaur-tabs-close-button " × ")
-  (setq centaur-tabs-set-close-button t)
-  (setq centaur-tabs-show-navigation-buttons t)
-  (setq centaur-tabs-set-close-button nil)
-  (setq centaur-tabs-set-modified-marker t)
-  (setq centaur-tabs-modified-marker "●")
-  (setq centaur-tabs-gray-out-icons 'buffer)
-  (setq centaur-tabs-buffer-groups-function #'centaur-tabs-projectile-buffer-groups))
 
 (use-package smooth-scrolling
   :ensure t
@@ -293,6 +233,38 @@
 
 
 
+(unless (package-installed-p 'tabbar)
+  (package-refresh-contents)
+  (package-install 'tabbar))
+
+(require 'tabbar)
+
+(tabbar-mode 1)  ;; Ativar o modo de abas
+
+(global-set-key (kbd "M-<left>") 'tabbar-backward-tab)
+(global-set-key (kbd "M-<right>") 'tabbar-forward-tab)
+(global-set-key (kbd "C-<prior>") 'centaur-tabs-backward)
+(global-set-key (kbd "C-<next>") 'centaur-tabs-forward)
+(global-set-key (kbd "C-x <tab>") 'other-window)
+
+;; Configuração opcional para modificar o visual das abas
+(setq tabbar-separator '(1.5))  ;; Espaçamento entre abas
+(setq tabbar-background-color "#282c34")  ;; Cor de fundo das abas
+(set-face-attribute 'tabbar-default nil
+                    :background "#282c34"
+                    :foreground "#bbc2cf"
+                    :box '(:line-width 1 :color "#282c34" :style nil))
+(set-face-attribute 'tabbar-selected nil
+                    :background "#3e4451"
+                    :foreground "#e06c75"
+                    :box '(:line-width 1 :color "#282c34" :style nil))
+(set-face-attribute 'tabbar-modified nil
+                    :background "#3e4451"
+                    :foreground "#e5c07b"
+                    :box '(:line-width 1 :color "#282c34" :style nil))
+
+
+
 
 ;; Atalhos -=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-
 
@@ -300,16 +272,8 @@
 (setq scroll-conservatively 101) ; Role o mínimo possível quando o cursor ultrapassa a janela
 
 ;; Configuração de atalhos para navegação entre abas
-(global-set-key (kbd "M-<left>") 'tabbar-backward-tab)
-(global-set-key (kbd "M-<right>") 'tabbar-forward-tab)
-(global-set-key (kbd "C-<prior>") 'centaur-tabs-backward)
-(global-set-key (kbd "C-<next>") 'centaur-tabs-forward)
-(global-set-key (kbd "C-x <tab>") 'other-window)
 
-(global-set-key (kbd "M-<down>") 'enlarge-window)
-(global-set-key (kbd "M-<up>") 'shrink-window)
-(global-set-key (kbd "M-<left>") 'enlarge-window-horizontally)
-(global-set-key (kbd "M-<right>") 'shrink-window-horizontally)
+
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-x C-z") 'my-suspend-emacs)
 
@@ -321,6 +285,9 @@
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "<Scroll_Lock>"))
 (delete-selection-mode t)
+
+(global-set-key (kbd "M-9") #'insert-pair)
+(global-set-key (kbd "C-x C-m") 'find-file)
 
 
 ;; My Extensetions -=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-
