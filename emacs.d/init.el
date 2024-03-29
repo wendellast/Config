@@ -263,9 +263,41 @@
   (setq centaur-tabs-gray-out-icons 'buffer)
   (setq centaur-tabs-buffer-groups-function #'centaur-tabs-projectile-buffer-groups))
 
+(use-package smooth-scrolling
+  :ensure t
+  :config
+  (smooth-scrolling-mode 1))
+
+(unless (package-installed-p 'company)
+  (package-refresh-contents)
+  (package-install 'company))
+
+;; Instalar o Flycheck
+(unless (package-installed-p 'flycheck)
+  (package-refresh-contents)
+  (package-install 'flycheck))
+
+
+;; Configuração para Python
+(add-hook 'python-mode-hook 'flycheck-mode)
+(add-hook 'python-mode-hook 'company-mode)
+
+
+;; Configuração para Ruby
+(add-hook 'ruby-mode-hook 'flycheck-mode)
+(add-hook 'ruby-mode-hook 'company-mode)
+
+;; Configuração para Go
+(add-hook 'go-mode-hook 'flycheck-mode)
+(add-hook 'go-mode-hook 'company-mode)
+
+
+
 
 ;; Atalhos -=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-
-;; Mude para a próxima e a aba anterior usando Ctrl + PageUp/PageDown
+
+(setq smooth-scroll-margin 5) ; Margem de pixels a serem exibidos enquanto rola
+(setq scroll-conservatively 101) ; Role o mínimo possível quando o cursor ultrapassa a janela
 
 ;; Configuração de atalhos para navegação entre abas
 (global-set-key (kbd "M-<left>") 'tabbar-backward-tab)
@@ -297,6 +329,16 @@
 
 
 ;; CONFIG EXTRA -=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-
+
+;; Define a função para carregar a fonte
+(defun load-jetbrains-mono ()
+  (interactive)
+  (set-frame-font "JetBrains Mono-12" t t))
+
+;; Carrega a fonte JetBrains Mono ao inicializar o Emacs
+(add-hook 'after-init-hook #'load-jetbrains-mono)
+
+
 
 (setq-default neo-show-hidden-files t)
   
